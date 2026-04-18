@@ -1,1 +1,12 @@
-
+{
+  "name": "libib-automation",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "fetch-libib": "node fetch-libib.js"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.45.0",
+    "node-fetch": "^3.3.2",
+    "aws-sdk": "^2.1581.0"
+  }
