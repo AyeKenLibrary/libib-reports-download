@@ -97,38 +97,38 @@ async function run() {
 
 
     // 1. Locate the element
-const exportButton = page.locator("text=Export CSV").first();
+//const exportButton = page.locator("text=Export CSV").first();
 
 // 2. Make sure the page is fully hydrated
-await page.waitForLoadState("domcontentloaded");
-await page.waitForLoadState("networkidle");
+//await page.waitForLoadState("domcontentloaded");
+//await page.waitForLoadState("networkidle");
 
 // 3. Scroll it into view (Cloudflare checks this)
-await exportButton.scrollIntoViewIfNeeded();
+//await exportButton.scrollIntoViewIfNeeded();
 
 // 4. Hover (Cloudflare REALLY checks this)
-await exportButton.hover();
+//await exportButton.hover();
 
 // 5. Add a small human-like delay
-await page.waitForTimeout(350 + Math.random() * 200);
+//await page.waitForTimeout(350 + Math.random() * 200);
 
 // 6. Focus the element (some CF rules require this)
-await exportButton.focus();
+//await exportButton.focus();
 
 // 7. Click, but don’t wrap it in Promise.all yet
-await exportButton.click({ delay: 120 + Math.random() * 80 });
+//await exportButton.click({ delay: 120 + Math.random() * 80 });
 
 // 8. NOW wait for the download event
-const download1 = await page.waitForEvent("download", { timeout: 30000 });
+//const download1 = await page.waitForEvent("download", { timeout: 30000 });
 
   //    const Path = await download1.path();
-    if (!Path) {
-      throw new Error("No download path returned");
-    }
+  //  if (!Path) {
+    //  throw new Error("No download path returned");
+    //}
 // 9. Save the file
- const csvBuffer1 = fs.readFileSync(Path);
-    console.log(csvBuffer1);
-await download1.saveAs("current-checkouts.csv");
+ //const csvBuffer1 = fs.readFileSync(Path);
+   // console.log(csvBuffer1);
+//await download1.saveAs("current-checkouts.csv");
     
     // 4. Go directly to CSV export URL
     const [download] = await Promise.all([
