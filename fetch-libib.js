@@ -77,12 +77,12 @@ async function run() {
     await page.goto("https://libib.com/reports");
 
     // 3. Trigger the CSV download by clicking the button
-    const [download] = await Promise.all([
+    const [download1] = await Promise.all([
     page.waitForEvent("download"),
     page.getByText("Current Checkouts").click()   // or the exact selector
     ]);
     // 4. Save the file
-    const path = await download.path();
+    const path = await download1.path();
     const csvBuffer1 = fs.readFileSync(path);
     console.log(csvBuffer1);
     await download.saveAs("loans.csv");
