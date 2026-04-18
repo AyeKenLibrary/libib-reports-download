@@ -56,7 +56,13 @@ async function run() {
   try {
     // 1. Go to login page
     await page.goto("https://www.libib.com/login", { waitUntil: "networkidle" });
-     console.log(await page.title());
+    const loginForm = await page.locator('form[action*="login"]').count();
+
+  if (loginForm > 0) {
+    console.log('On login page');
+  } 
+    
+    console.log(await page.title());
     // 2. First step: enter email and click "Next"
     await page.fill('input[name="login-email"]', LIBIB_EMAIL);
     await page.click('#login-pre-fetch-submit');
@@ -70,7 +76,11 @@ async function run() {
 
     // Wait for navigation to dashboard/home
     await page.waitForLoadState("networkidle");
-   console.log(await page.title());
+   const loginForm2 = await page.locator('form[action*="login"]').count();
+
+    if (loginForm2 > 0) {
+      console.log('Still on login page — credentials were rejected');
+    }
     console.log("Logged into Libib");
 
      // 2. Navigate to the reports page
