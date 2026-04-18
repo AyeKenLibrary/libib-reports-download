@@ -76,16 +76,21 @@ async function run() {
      // 2. Navigate to the reports page
     await page.goto("https://libib.com/reports");
 
-    // 3. Trigger the CSV download by clicking the button
-    const [download1] = await Promise.all([
-    page.waitForEvent("download"),
-    page.getByRole("button", {name:"Current Checkouts"}).click()   // or the exact selector
-    ]);
-    // 4. Save the file
-    const path = await download1.path();
-    const csvBuffer1 = fs.readFileSync(path);
+    // 1. Click the report tile
+  await page.locator("[data-report='current-checkouts']").click();
+  await page.waitForLoadState("networkidle");
+
+// 2. Now find the export button on the *new* page
+const exportButton = page.locator("text=Export").first();
+
+// 3. Trigger the download
+const [download1] = await Promise.all([
+  page.waitForEvent("download"),
+  exportButton.click()
+]);
+ const csvBuffer1 = fs.readFileSync(downloadPath);
     console.log(csvBuffer1);
-    await download.saveAs("loans.csv");
+await download1.saveAs("current-checkouts.csv");
     
     // 4. Go directly to CSV export URL
     const [download] = await Promise.all([
