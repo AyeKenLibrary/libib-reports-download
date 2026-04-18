@@ -56,7 +56,7 @@ async function run() {
   try {
     // 1. Go to login page
     await page.goto("https://www.libib.com/login", { waitUntil: "networkidle" });
-
+     console.log(await page.title());
     // 2. First step: enter email and click "Next"
     await page.fill('input[name="login-email"]', LIBIB_EMAIL);
     await page.click('#login-pre-fetch-submit');
@@ -70,12 +70,12 @@ async function run() {
 
     // Wait for navigation to dashboard/home
     await page.waitForLoadState("networkidle");
-
+   console.log(await page.title());
     console.log("Logged into Libib");
 
      // 2. Navigate to the reports page
     await page.goto("https://libib.com/reports", { waitUntil: 'networkidle' });
-    console.log(await page.title());
+    //console.log(await page.title());
     
     // Grab all headings (h1–h6)
 //const h1Locator = page.locator('h1').first();
