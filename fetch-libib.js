@@ -79,7 +79,7 @@ async function run() {
     // 3. Trigger the CSV download by clicking the button
     const [download1] = await Promise.all([
     page.waitForEvent("download"),
-    page.locator("text=Export").click()   // or the exact selector
+    page.getByRole("button", {name:"Current Checkouts"}).click()   // or the exact selector
     ]);
     // 4. Save the file
     const path = await download1.path();
