@@ -74,24 +74,28 @@ async function run() {
     console.log("Logged into Libib");
 
     // 4. Go directly to CSV export URL
-    const [download] = await Promise.all([
-      page.waitForEvent("download"),
-      page.goto(LIBIB_EXPORT_URL, { waitUntil: "networkidle" })
-    ]);
+   // const [download] = await Promise.all([
+     // page.waitForEvent("download"),
+      //page.goto(LIBIB_EXPORT_URL, { waitUntil: "networkidle" })
+    //]);
+    const response = await page.request.get(LIBIB_EXPORT_URL);
+    const csv = await response.text();
+    console.log(csv);
+    
+    
+    //const downloadPath = await download.path();
+    //if (!downloadPath) {
+      //throw new Error("No download path returned");
+    //}
 
-    const downloadPath = await download.path();
-    if (!downloadPath) {
-      throw new Error("No download path returned");
-    }
-
-    const csvBuffer = fs.readFileSync(downloadPath);
-    console.log(`Downloaded CSV (${csvBuffer.length} bytes)`);
+    //const csvBuffer = fs.readFileSync(downloadPath);
+   // console.log(`Downloaded CSV (${csvBuffer.length} bytes)`);
 
     // 5. Upload to R2
-    await uploadToR2(csvBuffer);
-  } finally {
-    await browser.close();
-  }
+    //await uploadToR2(csvBuffer);
+  //} finally {
+    //await browser.close();
+  //}
 }
 
 run().catch(err => {
