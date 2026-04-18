@@ -129,6 +129,14 @@ async function run() {
  //const csvBuffer1 = fs.readFileSync(Path);
    // console.log(csvBuffer1);
 //await download1.saveAs("current-checkouts.csv");
+
+  const [download3] = await Promise.all([
+  page.waitForEvent('download'),
+  page.click('text=Export CSV')
+]);
+
+const path = await download3.path();
+console.log('Downloaded file:', path);
     
     // 4. Go directly to CSV export URL
     const [download] = await Promise.all([
