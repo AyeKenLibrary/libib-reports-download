@@ -76,7 +76,11 @@ async function run() {
      // 2. Navigate to the reports page
     await page.goto("https://libib.com/reports");
     // Grab all headings (h1–h6)
-const h1 = await page.locator('h1').first().innerText();
+const h1Locator = page.locator('h1').first();
+
+await h1Locator.waitFor({ state: 'visible' });
+
+const h1 = await h1Locator.innerText();
 console.log('H1:', h1);
 
 
