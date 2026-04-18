@@ -73,6 +73,10 @@ async function run() {
 
     console.log("Logged into Libib");
 
+    const response = await page.request.get(LIBIB_EXPORT_URL);
+    const csv = await response.text();
+
+    console.log(csv);
     // 4. Go directly to CSV export URL
     const [download] = await Promise.all([
       page.waitForEvent("download"),
