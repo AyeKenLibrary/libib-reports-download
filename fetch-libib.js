@@ -124,7 +124,7 @@ const download1 = await page.waitForEvent("download", { timeout: 30000 });
   //    const Path = await download1.path();
     if (!Path) {
       throw new Error("No download path returned");
-    //}
+    }
 // 9. Save the file
  const csvBuffer1 = fs.readFileSync(Path);
     console.log(csvBuffer1);
