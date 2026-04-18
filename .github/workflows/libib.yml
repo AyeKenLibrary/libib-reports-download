@@ -1,1 +1,38 @@
+name: Libib CSV Fetch
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # every 15 minutes
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Libib fetch
+        env:
+          LIBIB_EMAIL: ${{ secrets.LIBIB_EMAIL }}
+          LIBIB_PASSWORD: ${{ secrets.LIBIB_PASSWORD }}
+          LIBIB_EXPORT_URL: ${{ secrets.LIBIB_EXPORT_URL }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          R2_OBJECT_KEY: libib-lending.csv
+        run: npm run fetch-libib
 
