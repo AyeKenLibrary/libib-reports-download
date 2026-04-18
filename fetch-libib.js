@@ -75,13 +75,15 @@ async function run() {
 
      // 2. Navigate to the reports page
     await page.goto("https://libib.com/reports");
+    console.log(await page.title());
+    
     // Grab all headings (h1–h6)
-const h1Locator = page.locator('h1').first();
+//const h1Locator = page.locator('h1').first();
 
-await h1Locator.waitFor({ state: 'visible' });
+//await h1Locator.waitFor({ state: 'visible' });
 
-const h1 = await h1Locator.innerText();
-console.log('H1:', h1);
+//const h1 = await h1Locator.innerText();
+//console.log('H1:', h1);
 
 
     // 1. Locate the element
