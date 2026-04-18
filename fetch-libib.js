@@ -84,7 +84,7 @@ async function run() {
     // 4. Save the file
     const path = await download.path();
     const csvBuffer1 = fs.readFileSync(path);
-    console.log('csvBuffer1);
+    console.log(csvBuffer1);
     await download.saveAs("loans.csv");
     
     // 4. Go directly to CSV export URL
