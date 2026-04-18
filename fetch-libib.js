@@ -76,15 +76,10 @@ async function run() {
      // 2. Navigate to the reports page
     await page.goto("https://libib.com/reports");
     // Grab all headings (h1–h6)
-    const headings = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll('h1, h2'))
-      .map(h => ({
-        tag: h.tagName.toLowerCase(),
-        text: h.innerText.trim()
-      }));
-  });
+const h1 = await page.locator('h1').first().innerText();
+console.log('H1:', h1);
 
-console.log(headings);
+
     // 1. Locate the element
 //const exportButton = page.locator("text=Export CSV").first();
 
