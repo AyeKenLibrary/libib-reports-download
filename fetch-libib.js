@@ -132,15 +132,10 @@ async function run() {
 //console.log(await page.content());
 
 
-    await page.locator('[data-report="current-checkouts"]').click();
-await page.waitForLoadState('networkidle');
-
-const exportBtn = page.locator('a[href$=".csv"], .export, .export-btn');
-await exportBtn.waitFor();
     
   const [download3] = await Promise.all([
   page.waitForEvent('download'),
-   exportBtn.click()
+  page.getByRole('button', { name: 'Current Checkouts' }).click()
 ]);
 
 const path = await download3.path();
