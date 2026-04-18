@@ -98,8 +98,8 @@ async function run() {
   //}
 }
 
-run().catch(err => {
-  console.error("Libib fetch failed:", err);
-  process.exit(1);
-});
+//run().catch(err => {
+  //console.error("Libib fetch failed:", err);
+  //process.exit(1);
+//});
 
