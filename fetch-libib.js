@@ -129,10 +129,18 @@ async function run() {
  //const csvBuffer1 = fs.readFileSync(Path);
    // console.log(csvBuffer1);
 //await download1.saveAs("current-checkouts.csv");
-console.log(await page.content());
+//console.log(await page.content());
+
+
+    await page.locator('[data-report="current-checkouts"]').click();
+await page.waitForLoadState('networkidle');
+
+const exportBtn = page.locator('a[href$=".csv"], .export, .export-btn');
+await exportBtn.waitFor();
+    
   const [download3] = await Promise.all([
   page.waitForEvent('download'),
-  page.click('text=Export CSV')
+   exportBtn.click()
 ]);
 
 const path = await download3.path();
