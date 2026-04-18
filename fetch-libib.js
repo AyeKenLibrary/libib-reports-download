@@ -73,10 +73,20 @@ async function run() {
 
     console.log("Logged into Libib");
 
-    const response = await page.request.get(LIBIB_EXPORT_URL);
-    const csv = await response.text();
+     // 2. Navigate to the reports page
+    await page.goto("https://libib.com/reports");
 
-    console.log(csv);
+    // 3. Trigger the CSV download by clicking the button
+    const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByText("Current Checkouts").click();   // or the exact selector
+    ]);
+    // 4. Save the file
+    const path = await download.path();
+    const csvBuffer1 = fs.readFileSync(path);
+    console.log('csvBuffer1);
+    await download.saveAs("loans.csv");
+    
     // 4. Go directly to CSV export URL
     const [download] = await Promise.all([
       page.waitForEvent("download"),
