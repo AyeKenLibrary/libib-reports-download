@@ -81,7 +81,7 @@ async function run() {
     console.log("Logged into Libib");
 
      // 2. Navigate to the reports page
-    await page.goto("https://libib.com/reports", { waitUntil: 'commit' });
+    await page.goto("https://libib.com/reports", { waitUntil: 'domcontentloaded' });
     console.log(await page.title());
     
   //Download report 
