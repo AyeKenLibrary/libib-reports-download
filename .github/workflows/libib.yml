@@ -2,7 +2,7 @@ name: Libib CSV Fetch
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # every 15 minutes
+    - cron: "*/35 * * * *" # every 35 minutes
   workflow_dispatch:
 
 jobs:
