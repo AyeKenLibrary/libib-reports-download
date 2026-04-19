@@ -2,7 +2,8 @@ name: Libib CSV Fetch
 
 on:
   schedule:
-    - cron: "*/35 * * * *" # every 35 minutes
+    - cron: "0 * * * *"
+    - cron: "30 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -37,4 +38,11 @@ jobs:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
           R2_OBJECT_KEY: libib-lending.csv
         run: npm run fetch-libib
+
+      - name: Trigger next run in 15 minutes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sleep 600  # 10 minutes
+          gh workflow run self-cron.yml
 
