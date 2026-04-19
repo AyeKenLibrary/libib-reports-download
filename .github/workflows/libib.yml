@@ -6,6 +6,10 @@ on:
     - cron: "30 * * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -43,6 +47,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          sleep 600  # 10 minutes
-          gh workflow run self-cron.yml
+          sleep 120  #2 minutes
+          gh workflow run libib.yml
 
