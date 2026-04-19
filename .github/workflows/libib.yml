@@ -19,7 +19,7 @@ jobs:
           node-version: 24
            
       - name: Install deps
-        run: npm install
+        run: npm ci --prefer-offline
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
