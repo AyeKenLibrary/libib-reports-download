@@ -55,7 +55,7 @@ async function run() {
 
   try {
     // 1. Go to login page
-    await page.goto("https://www.libib.com/login", { waitUntil: "networkidle" });
+    await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
     const loginForm = await page.locator('form[action*="login"]').count();
 
   if (loginForm > 0) {
