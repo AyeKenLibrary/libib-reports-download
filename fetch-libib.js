@@ -92,7 +92,6 @@ async function run() {
             console.log(await page.title());
             break
       } catch (e) {
-                    console.log("Download Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
@@ -102,12 +101,13 @@ async function run() {
  for (let i = 1; i <= 3; i++){
       try {   
              console.log("Download Attempt: ", i);
-            const [download3] = await Promise.all([
+            var [download3] = await Promise.all([
               page.waitForEvent('download'), { timeout: 60_000 },
               page.getByRole('button', { name: 'Current Checkouts' }).click()
             ]);
             break
       } catch (e) {
+                    console.log("Download Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
