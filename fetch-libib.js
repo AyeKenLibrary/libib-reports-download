@@ -59,6 +59,8 @@ async function run() {
     // 1. Go to login page
     for (let i = 1; i <= 3; i++){
       try {
+
+            console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
             
             const loginForm = await page.locator('form[action*="login"]').count();
@@ -91,14 +93,17 @@ async function run() {
     await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
     // 3. Enter password and submit
+    await page.fill('input[name="email"]', LIBIB_EMAIL);
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    await page.waitForLoadState("domcontentloaded");
+    //await page.waitForLoadState("domcontentloaded");
+    await page.waitForSelector('.libraries, .collections, nav .navbar-brand', {timeout: 20000});
     
-    console.log("Page Title After Login:", await page.title());
     console.log("Logged into Libib");
+    console.log("Page Title After Login:", await page.title());
+    
 
      // 2. Navigate to the reports page
     for (let i = 1; i <= 3; i++){
