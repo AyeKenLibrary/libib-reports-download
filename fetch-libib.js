@@ -93,17 +93,12 @@ async function run() {
     await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
     // 3. Enter password and submit
-    const hasRealPasswordField = await page.locator('input[name="email"]').count();
-    const hasRealEmailField = await page.locator('input[name="password"]').count();
-    console.log("Real Email Field Count: ", hasRealEmailField);
-    console.log("Real Password Field Count: ", hasRealPasswordField);
-    //await page.fill('input[type="email"]', LIBIB_EMAIL);
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
     //await page.waitForLoadState("domcontentloaded");
-    await page.waitForSelector('.libraries, .collections, nav .navbar-brand', {timeout: 20000});
+    //await page.waitForSelector('.libraries, .collections, nav .navbar-brand', {timeout: 20000});
     
     console.log("Logged into Libib");
     console.log("Page Title After Login:", await page.title());
