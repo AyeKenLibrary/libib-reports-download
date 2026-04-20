@@ -92,7 +92,7 @@ async function run() {
             console.log(await page.title());
             break
       } catch (e) {
-                    console.log("Navigate to Reports Page Error Message: ", e);
+                    console.error("Navigate to Reports Page Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
@@ -102,19 +102,19 @@ async function run() {
  for (let i = 1; i <= 3; i++){
       try {   
              console.log("Download Attempt: ", i);
-            var [download3] = await Promise.all([
+            var [download] = await Promise.all([
               page.waitForEvent('download'), { timeout: 60_000 },
               page.getByRole('button', { name: 'Current Checkouts' }).click()
             ]);
             break
       } catch (e) {
-                    console.log("Download Error Message: ", e);
+                    console.error("Download Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
     }
     
-    const downloadPath = await download3.path();
+    const downloadPath = await download.path();
     if (!downloadPath) {
       throw new Error("No download path returned");
     }
