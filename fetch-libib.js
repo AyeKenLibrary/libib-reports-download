@@ -89,7 +89,7 @@ async function run() {
       try {
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
-            return
+            break
       } catch (e) {
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
@@ -103,7 +103,7 @@ async function run() {
               page.waitForEvent('download'), { timeout: 60_000 },
               page.getByRole('button', { name: 'Current Checkouts' }).click()
             ]);
-            return
+            break
       } catch (e) {
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
