@@ -110,18 +110,14 @@ async function run() {
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
             await page.waitForSelector('.report-csv');
-            const DownloadCurrentCheckoutsButton1 = await page.locator('[data-report="current-checkouts"]').count();
-            const DownloadCurrentCheckoutsButton2 = await page.locator('[aria-label="Current Checkouts"]').count();
-            const DownloadCurrentCheckoutsButton3 =await page.getByText('Current Checkouts').count();
-            console.log("Download Current Checkouts Button Count1: ", DownloadCurrentCheckoutsButton1);
-            console.log("Download Current Checkouts Button Count2: ", DownloadCurrentCheckoutsButton2);
-            console.log("Download Current Checkouts Button Count3: ", DownloadCurrentCheckoutsButton3);
-            //if (DownloadCurrentCheckoutsButton > 0){
-              //  console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
-                //break
-              //} else {
-                //  throw e;
-              //} 
+            const DownloadCurrentCheckoutsButton = await page.locator('[data-report="current-checkouts"]').count(); 
+            if (DownloadCurrentCheckoutsButton > 0){
+                console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
+                break
+              } else {
+                  console.log("Button for Downloading Current Checkouts Missing);
+                  throw e;
+              } 
             break
       } catch (e) {
                     console.error("Navigate to Reports Page Error Message: ", e);
