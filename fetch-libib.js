@@ -50,8 +50,9 @@ async function uploadToR2(buffer) {
 }
 
 async function run() {
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
+  const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu",],});
+  const context = await browser.newContext({ acceptDownloads:true });
+  const page = await context.newPage();
 
   try {
     // 1. Go to login page
@@ -100,6 +101,7 @@ async function run() {
     // 5. Upload to R2
     await uploadToR2(csvBuffer);
   } finally {
+    await context.close();
     await browser.close();
   }
 }
