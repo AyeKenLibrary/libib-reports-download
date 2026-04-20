@@ -45,6 +45,11 @@ jobs:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
           R2_OBJECT_KEY: libib-lending.csv
         run: npm run fetch-libib
+        
+      - name: Notify Cloudflare Worker
+        run: |
+              curl -H "Authorization: Bearer ${{ secrets.CF_CALLBACK_SECRET }}" \
+              "https://ayekenlibrary.com/github-callback?status=${{ job.status }}"  
 
       #- name: Trigger next run in 10 minutes
       #  env:
