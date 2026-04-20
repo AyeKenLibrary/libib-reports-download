@@ -77,7 +77,7 @@ async function run() {
               throw e;
             }
             break
-    } catch (e) {
+          } catch (e) {
                     console.error("Navigate to Login Page Error: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
@@ -85,26 +85,25 @@ async function run() {
     }
     
     
-    // 2. First step: enter email and click "Next"
+    //Enter email and click "Next"
     await page.fill('input[name="login-email"]', LIBIB_EMAIL);
     await page.click('#login-pre-fetch-submit');
 
     // Wait for password form to appear
     await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
-    // 3. Enter password and submit
+    // Enter password and submit
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    await page.waitForLoadState("networkidle");
-    //await page.waitForSelector('.libraries, .collections, nav .navbar-brand', {timeout: 20000});
+    await page.waitForLoadState("domcontentloaded");
+    
     
     console.log("Logged into Libib");
-    console.log("Page Title After Login:", await page.title());
     
 
-     // 2. Navigate to the reports page
+     // Navigate to the reports page
     for (let i = 1; i <= 3; i++){
       try {
             console.log("Reports Page Navigate Attempt: ", i);
@@ -117,9 +116,9 @@ async function run() {
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
     }
-  //Download report 
-
- for (let i = 1; i <= 3; i++){
+    
+    //Download report 
+    for (let i = 1; i <= 3; i++){
       try {   
              console.log("Download Attempt: ", i);
             var [download] = await Promise.all([
@@ -133,15 +132,17 @@ async function run() {
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
     }
-    
+
+      //Check that download path exists
     const downloadPath = await download.path();
     if (!downloadPath) {
       throw new Error("No download path returned");
     }
+      //Download report if download path exists 
     const csvBuffer = fs.readFileSync(downloadPath);
     console.log(`Downloaded CSV (${csvBuffer.length} bytes)`);
 
-    // 5. Upload to R2
+    //Upload downloaded report to R2
     await uploadToR2(csvBuffer);
   } finally {
     await context.close();
