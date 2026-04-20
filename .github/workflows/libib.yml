@@ -1,9 +1,9 @@
 name: Libib CSV Fetch
 
 on:
-  schedule:
-    - cron: "0 * * * *"
-    - cron: "30 * * * *"
+  #schedule:
+  #  - cron: "0 * * * *"
+  #  - cron: "30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -46,10 +46,10 @@ jobs:
           R2_OBJECT_KEY: libib-lending.csv
         run: npm run fetch-libib
 
-      - name: Trigger next run in 10 minutes
-        env:
-           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          sleep 600  #10 minutes
-          gh workflow run libib.yml
+      #- name: Trigger next run in 10 minutes
+      #  env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  run: |
+      #    sleep 600  #10 minutes
+      #   gh workflow run libib.yml
 
