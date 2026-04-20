@@ -53,7 +53,7 @@ async function run() {
   const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu",],});
   const context = await browser.newContext({ acceptDownloads:true });
   const page = await context.newPage();
-  await page.waitForTimeout(5000 * Math.random() * 2000);
+  await page.waitForTimeout(10000 * Math.random());
   
   try {
     // 1. Go to login page
