@@ -87,6 +87,7 @@ async function run() {
      // 2. Navigate to the reports page
     for (let i = 1; i <= 3; i++){
       try {
+            console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
             break
@@ -99,6 +100,7 @@ async function run() {
 
  for (let i = 1; i <= 3; i++){
       try {   
+             console.log("Download Attempt: ", i);
             const [download3] = await Promise.all([
               page.waitForEvent('download'), { timeout: 60_000 },
               page.getByRole('button', { name: 'Current Checkouts' }).click()
