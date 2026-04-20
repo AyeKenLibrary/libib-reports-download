@@ -65,14 +65,14 @@ async function run() {
             if (loginForm > 0) {
               console.log('On login page: ', await page.title());
             } else {
-              throw e
+              throw e;
             }
             const hasEmailField = await page.locator('input[name="login-email"]').count() > 0;
             if (hasEmailField > 0) {
               console.log('Input Email Field Present');
             } else {
               console.log('Missing Input Email Field');
-              throw e
+              throw e;
             }
         
     } catch (e) {
