@@ -67,7 +67,7 @@ async function run() {
             } else {
               throw e
             }
-            const hasEmailField = await page.locator('input[type="email"], input[name="email"]').count() > 0;
+            const hasEmailField = await page.locator('input[name="login-email"]').count() > 0;
             if (hasEmailField > 0) {
               console.log('Input Email Field Present');
             } else {
