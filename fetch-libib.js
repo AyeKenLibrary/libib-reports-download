@@ -110,13 +110,14 @@ async function run() {
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
             const DownloadCurrentCheckoutsButton = page.getByRole('button', { name: 'Current Checkouts' }).count();
-            if (DownloadCurrentCheckoutsButton > 0){
-                console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
-                break
-              } else {
-                  throw e;
-              } 
-            
+            console.log("Download Current Checkouts Button Count: ", DownloadCurrentCheckoutsButton);
+            //if (DownloadCurrentCheckoutsButton > 0){
+              //  console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
+                //break
+              //} else {
+                //  throw e;
+              //} 
+            break
       } catch (e) {
                     console.error("Navigate to Reports Page Error Message: ", e);
                     if (i === 3) throw e;
