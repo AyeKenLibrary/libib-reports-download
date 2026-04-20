@@ -69,7 +69,7 @@ async function run() {
             } else {
               throw e;
             }
-            const hasEmailField = await page.locator('input[name="login-email"]').count() > 0;
+            const hasEmailField = await page.locator('input[name="login-email"]').count();
             if (hasEmailField > 0) {
               console.log('Input Email Field Present');
             } else {
@@ -93,7 +93,11 @@ async function run() {
     await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
     // 3. Enter password and submit
-    await page.fill('input[name="email"]', LIBIB_EMAIL);
+    const hasRealPasswordField = await page.locator('input[name="email"]').count();
+    const hasRealEmailField = await page.locator('input[type="password"]').count();
+    console.log("Real Email Field Count: ", hasRealEmailField);
+    console.log("Real Password Field Count: ", hasRealPasswordField);
+    await page.fill('input[type="email"]', LIBIB_EMAIL);
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
 
