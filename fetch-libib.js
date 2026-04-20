@@ -39,7 +39,7 @@ const s3 = new S3Client({
 
 async function uploadToR2(buffer) {
   await s3.send(
-    new putObjectCommand({
+    new PutObjectCommand({
       Bucket: R2_BUCKET,
       Key: R2_OBJECT_KEY,
       Body: buffer,
