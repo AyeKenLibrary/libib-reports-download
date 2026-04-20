@@ -59,7 +59,7 @@ async function run() {
     // 1. Go to login page
     for (let i = 1; i <= 3; i++){
       try {
-            await page.goto("https://www.libib.com/login", { timeout: 60_000, waitUntil: "domcontentloaded" });
+            await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
             
             const loginForm = await page.locator('form[action*="login"]').count();
             if (loginForm > 0) {
