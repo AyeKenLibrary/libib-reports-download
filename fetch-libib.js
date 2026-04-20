@@ -60,30 +60,28 @@ async function run() {
     for (let i = 1; i <= 3; i++){
       try {
             await page.goto("https://www.libib.com/login", { timeout: 60_000, waitUntil: "domcontentloaded" });
+            
             const loginForm = await page.locator('form[action*="login"]').count();
-
             if (loginForm > 0) {
-              console.log('On login page');
+              console.log('On login page: ', await page.title());
             } else {
+              throw e
+            }
+            const hasEmailField = await page.locator('input[type="email"], input[name="email"]').count() > 0;
+            if (hasEmailField > 0) {
+              console.log('Input Email Field Present');
+            } else {
+              console.log('Missing Input Email Field');
               throw e
             }
         
     } catch (e) {
-                    console.error("Navigate to Login Page Error Message: ", e);
+                    console.error("Navigate to Login Page Error: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
     }
     
-    
-    
-    const loginForm = await page.locator('form[action*="login"]').count();
-
-    if (loginForm > 0) {
-      console.log('On login page');
-    } 
-    
-    console.log(await page.title());
     
     // 2. First step: enter email and click "Next"
     await page.fill('input[name="login-email"]', LIBIB_EMAIL);
@@ -97,7 +95,7 @@ async function run() {
     await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     
     console.log("Page Title After Login:", await page.title());
     console.log("Logged into Libib");
