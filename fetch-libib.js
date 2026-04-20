@@ -39,12 +39,12 @@ const s3 = new s3Client({
 
 async function uploadToR2(buffer) {
   await s3.send(
-      .putObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: R2_OBJECT_KEY,
-        Body: buffer,
-        ContentType: "text/csv"
-      })
+    new putObjectCommand({
+      Bucket: R2_BUCKET,
+      Key: R2_OBJECT_KEY,
+      Body: buffer,
+      ContentType: "text/csv"
+    })
   );
   console.log(`Uploaded CSV to R2: ${R2_BUCKET}/${R2_OBJECT_KEY}`);
 }
