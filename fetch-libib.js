@@ -94,10 +94,10 @@ async function run() {
 
     // 3. Enter password and submit
     const hasRealPasswordField = await page.locator('input[name="email"]').count();
-    const hasRealEmailField = await page.locator('input[type="password"]').count();
+    const hasRealEmailField = await page.locator('input[name="password"]').count();
     console.log("Real Email Field Count: ", hasRealEmailField);
     console.log("Real Password Field Count: ", hasRealPasswordField);
-    await page.fill('input[type="email"]', LIBIB_EMAIL);
+    //await page.fill('input[type="email"]', LIBIB_EMAIL);
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
 
