@@ -29,12 +29,12 @@ if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) 
 
 // Configure R2 (S3-compatible)
 const s3 = new S3Client({
-  region: "eu-west-2",
+  region: "auto",
   endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  accessKeyId: R2_ACCESS_KEY_ID,
-  secretAccessKey: R2_SECRET_ACCESS_KEY,
-  signatureVersion: "v4",
-  s3ForcePathStyle: true
+  credentials: {
+    accessKeyId: R2_ACCESS_KEY_ID,
+    secretAccessKey: R2_SECRET_ACCESS_KEY
+  }
 });
 
 async function uploadToR2(buffer) {
