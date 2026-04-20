@@ -115,7 +115,7 @@ async function run() {
                 console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
                 break
               } else {
-                  console.log("Button for Downloading Current Checkouts Missing);
+                  console.log("Button for Downloading Current Checkouts Missing");
                   throw e;
               } 
             break
