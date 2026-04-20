@@ -82,7 +82,7 @@ async function run() {
     console.log("Logged into Libib");
 
      // 2. Navigate to the reports page
-    for (let i = 1: i <= 3: i++){
+    for (let i = 1; i <= 3; i++){
       try {
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
