@@ -72,11 +72,11 @@ async function run() {
             const hasEmailField = await page.locator('input[name="login-email"]').count();
             if (hasEmailField > 0) {
               console.log('Input Email Field Present');
+              break
             } else {
               console.log('Missing Input Email Field');
               throw e;
             }
-            break
           } catch (e) {
                     console.error("Navigate to Login Page Error: ", e);
                     if (i === 3) throw e;
@@ -109,7 +109,14 @@ async function run() {
             console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
-            break
+            const DownloadCurrentCheckoutsButton = page.getByRole('button', { name: 'Current Checkouts' }).count();
+            if (DownloadCurrentCheckoutsButtion > 0){
+                console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
+                break
+              } else {
+                  throw e;
+              } 
+            
       } catch (e) {
                     console.error("Navigate to Reports Page Error Message: ", e);
                     if (i === 3) throw e;
