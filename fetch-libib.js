@@ -74,7 +74,7 @@ async function run() {
               console.log('Missing Input Email Field');
               throw e;
             }
-        
+            break
     } catch (e) {
                     console.error("Navigate to Login Page Error: ", e);
                     if (i === 3) throw e;
