@@ -93,11 +93,20 @@ async function run() {
                   }
     }
   //Download report 
-  const [download3] = await Promise.all([
-  page.waitForEvent('download'), { timeout: 60_000 },
-  page.getByRole('button', { name: 'Current Checkouts' }).click()
-]);
 
+ for (let i = 1; i <= 3; i++){
+      try {   
+            const [download3] = await Promise.all([
+              page.waitForEvent('download'), { timeout: 60_000 },
+              page.getByRole('button', { name: 'Current Checkouts' }).click()
+            ]);
+            return
+      } catch (e) {
+                    if (i === 3) throw e;
+                    await page.waitForTimeout(5000 * i + Math.random() * 2000);
+                  }
+    }
+    
     const downloadPath = await download3.path();
     if (!downloadPath) {
       throw new Error("No download path returned");
