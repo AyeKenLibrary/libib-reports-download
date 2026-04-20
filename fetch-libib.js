@@ -57,7 +57,26 @@ async function run() {
   
   try {
     // 1. Go to login page
-    await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
+    for (let i = 1; i <= 3; i++){
+      try {
+            await page.goto("https://www.libib.com/login", { timeout: 60_000, waitUntil: "domcontentloaded" });
+            const loginForm = await page.locator('form[action*="login"]').count();
+
+            if (loginForm > 0) {
+              console.log('On login page');
+            } else {
+              throw e
+            }
+        
+    } catch (e) {
+                    console.error("Navigate to Login Page Error Message: ", e);
+                    if (i === 3) throw e;
+                    await page.waitForTimeout(5000 * i + Math.random() * 2000);
+                  }
+    }
+    
+    
+    
     const loginForm = await page.locator('form[action*="login"]').count();
 
     if (loginForm > 0) {
@@ -79,7 +98,6 @@ async function run() {
 
     // Wait for navigation to dashboard/home
     await page.waitForLoadState("networkidle");
-    const loginForm2 = await page.locator('form[action*="login"]').count();
     
     console.log("Page Title After Login:", await page.title());
     console.log("Logged into Libib");
