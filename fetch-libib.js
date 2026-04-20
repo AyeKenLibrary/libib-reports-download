@@ -82,12 +82,19 @@ async function run() {
     console.log("Logged into Libib");
 
      // 2. Navigate to the reports page
-    await page.goto("https://libib.com/reports", { waitUntil: 'commit' });
-    console.log(await page.title());
-    
+    for (let i = 1: i <= 3: i++){
+      try {
+            await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
+            console.log(await page.title());
+            return
+      } catch (e) {
+                    if (i === 3) throw e;
+                    await page.waitForTimeout(5000 * i + Math.random() * 2000);
+                  }
+    }
   //Download report 
   const [download3] = await Promise.all([
-  page.waitForEvent('download'),
+  page.waitForEvent('download'), { timeout: 60_000 },
   page.getByRole('button', { name: 'Current Checkouts' }).click()
 ]);
 
