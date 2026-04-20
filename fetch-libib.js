@@ -110,7 +110,7 @@ async function run() {
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
             const DownloadCurrentCheckoutsButton = page.getByRole('button', { name: 'Current Checkouts' }).count();
-            if (DownloadCurrentCheckoutsButtion > 0){
+            if (DownloadCurrentCheckoutsButton > 0){
                 console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
                 break
               } else {
