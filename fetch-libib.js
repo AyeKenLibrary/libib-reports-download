@@ -80,7 +80,8 @@ async function run() {
     // Wait for navigation to dashboard/home
     await page.waitForLoadState("networkidle");
     const loginForm2 = await page.locator('form[action*="login"]').count();
-
+    
+    console.log("Page Title After Login:", await page.title());
     console.log("Logged into Libib");
 
      // 2. Navigate to the reports page
