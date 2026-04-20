@@ -1,5 +1,5 @@
 import { chromium } from "@playwright/test";
-import AWS from "aws-sdk";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -28,7 +28,8 @@ if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) 
 }
 
 // Configure R2 (S3-compatible)
-const s3 = new AWS.S3({
+const s3 = new s3Client({
+  region: "eu-west-2",
   endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
   accessKeyId: R2_ACCESS_KEY_ID,
   secretAccessKey: R2_SECRET_ACCESS_KEY,
@@ -37,15 +38,14 @@ const s3 = new AWS.S3({
 });
 
 async function uploadToR2(buffer) {
-  await s3
-    .putObject({
-      Bucket: R2_BUCKET,
-      Key: R2_OBJECT_KEY,
-      Body: buffer,
-      ContentType: "text/csv"
-    })
-    .promise();
-
+  await s3.send(
+      .putObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: R2_OBJECT_KEY,
+        Body: buffer,
+        ContentType: "text/csv"
+      })
+  );
   console.log(`Uploaded CSV to R2: ${R2_BUCKET}/${R2_OBJECT_KEY}`);
 }
 
