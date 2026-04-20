@@ -97,7 +97,7 @@ async function run() {
     await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    //await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     //await page.waitForSelector('.libraries, .collections, nav .navbar-brand', {timeout: 20000});
     
     console.log("Logged into Libib");
