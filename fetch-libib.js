@@ -109,6 +109,7 @@ async function run() {
             console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'commit' });
             console.log(await page.title());
+            await page.waitForSelector('.report-csv');
             const DownloadCurrentCheckoutsButton1 = await page.locator('[data-report="current-checkouts"]').count();
             const DownloadCurrentCheckoutsButton2 = await page.locator('[aria-label="Current Checkouts"]').count();
             const DownloadCurrentCheckoutsButton3 =await page.getByText('Current Checkouts').count();
