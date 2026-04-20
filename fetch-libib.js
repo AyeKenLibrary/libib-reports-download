@@ -92,6 +92,7 @@ async function run() {
             console.log(await page.title());
             break
       } catch (e) {
+                    console.log("Download Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
