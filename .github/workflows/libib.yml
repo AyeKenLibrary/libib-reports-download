@@ -46,10 +46,10 @@ jobs:
           R2_OBJECT_KEY: libib-lending.csv
         run: npm run fetch-libib
 
-      - name: Trigger next run in 2 minutes
-        env:
-           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          sleep 120  #10 minutes
-          gh workflow run libib.yml
+      #- name: Trigger next run in 2 minutes
+        #env:
+           #GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #run: |
+          #sleep 120  #10 minutes
+          #gh workflow run libib.yml
 
