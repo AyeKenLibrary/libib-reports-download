@@ -17,8 +17,6 @@ const {
   R2_OBJECT_KEY = "libib-lending.csv"
 } = process.env;
 
-let exportBtn;
-
 if (!LIBIB_EMAIL || !LIBIB_PASSWORD || !LIBIB_EXPORT_URL) {
   console.error("Missing LIBIB_EMAIL / LIBIB_PASSWORD / LIBIB_EXPORT_URL");
   process.exit(1);
@@ -110,11 +108,8 @@ async function run() {
     for (let i = 1; i <= 3; i++){
       try {
             console.log("Reports Page Navigate Attempt: ", i);
-            await page.goto("https://libib.com/reports/", { timeout: 60_000,  waitUntil: 'domcontentloaded' });
+            await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'domcontentloaded' });
             console.log(await page.title());
-            //exportBtn = page.locator('a[href$=".csv"], .export, .export-btn').first();
-            //await exportBtn.waitFor();
-            //const DownloadCurrentCheckoutsButton = await exportBtn.count();
             await page.waitForSelector('.report-csv');
             const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
             if (DownloadCurrentCheckoutsButton > 0){
