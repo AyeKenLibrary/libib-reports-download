@@ -110,6 +110,7 @@ async function run() {
             console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'domcontentloaded' });
             console.log(await page.title());
+            await page.waitForTimeout(2000);
             await page.goto('https://libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
             console.log(await page.title());
             throw e;
