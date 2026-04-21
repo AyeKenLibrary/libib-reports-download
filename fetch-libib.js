@@ -87,9 +87,7 @@ async function run() {
     }
     
             // Wait for the JS-hydrated login form
-await page.waitForSelector('form#login-form input[name="login-email"]', {
-  timeout: 15000
-);
+await page.waitForSelector('form#login-form input[name="login-email"]');
     await page.fill('form#login-form input[name="login-email"]', LIBIB_EMAIL);
     await page.fill('form#login-form input[name="login-password"]', LIBIB_PASSWORD);
     await Promise.all([
