@@ -128,7 +128,13 @@ async function run() {
     console.log("Cloudflare Block Detection: ", await page.locator('script[src*="app"]').count());
 const realPassword = page.locator('input[name="password"]');
 const realToken = page.locator('input[name="_token"]');
-
+console.log(await page.title());
+page.on('requestfailed', req => {
+  if (req.url().includes('js')) {
+    console.log('JS blocked:', req.url(), req.failure());
+  }
+});
+  console.log(await page.evaluate(() => window.__INITIAL_STATE__));  
 const isRealLogin = await realPassword.count();
     console.log("Value of isRealLogin", isRealLogin);
     throw e;
