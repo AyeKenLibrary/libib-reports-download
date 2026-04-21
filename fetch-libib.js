@@ -59,7 +59,10 @@ async function run() {
     //Go to login page
     for (let i = 1; i <= 3; i++){
       try {
-
+            await context.setExtraHTTPHeaders({
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+  "Accept-Language": "en-GB,en;q=0.9"
+});
             console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/login", { waitUntil: "domcontentloaded" });
             await page.waitForSelector('input[name="login-email"]');
@@ -87,7 +90,7 @@ async function run() {
     }
     
             // Wait for the JS-hydrated login form
-await page.waitForSelector('form#login-form input[name="login-email"]');
+//await page.waitForSelector('form#login-form input[name="login-email"]');
     await page.fill('form#login-form input[name="login-email"]', LIBIB_EMAIL);
     await page.fill('form#login-form input[name="login-password"]', LIBIB_PASSWORD);
     await Promise.all([
