@@ -87,22 +87,21 @@ async function run() {
     
            
     //Enter email and click "Next"
-    //await page.fill('input[name="login-email"]', LIBIB_EMAIL);
-    //await page.click('#login-pre-fetch-submit');
+    await page.fill('input[name="login-email"]', LIBIB_EMAIL);
+    await page.click('#login-pre-fetch-submit');
 
     //Wait for password form to appear
-    //await page.waitForSelector('input[type="password"]', { timeout: 15000 });
+    await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
     //Enter password and submit
-    //await page.fill('input[type="password"]', LIBIB_PASSWORD);
-    
-    //await page.click('button[type="submit"], input[type="submit"]');
+    await page.fill('input[type="password"]', LIBIB_PASSWORD);
+    await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    //await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("domcontentloaded");
     
     
-    //console.log("Logged into Libib");
+    console.log("Logged into Libib");
 
      // Navigate to the reports page
     for (let i = 1; i <= 3; i++){
@@ -110,10 +109,6 @@ async function run() {
             console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { waitUntil: 'domcontentloaded' });
             console.log(await page.title());
-            //await page.waitForTimeout(2000);
-            //await page.goto('https://libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
-            //console.log(await page.title());
-            //throw e;
             await page.waitForSelector('.report-csv');
             const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
             if (DownloadCurrentCheckoutsButton > 0){
