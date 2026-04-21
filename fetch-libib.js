@@ -62,7 +62,7 @@ async function run() {
 
             console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
-            await page.waitForSelector('input[name="login-email"]);
+            await page.waitForSelector('input[name="login-email"]');
             const loginForm = await page.locator('form[action*="login"]').count();
             if (loginForm > 0) {
               console.log('On login page: ', await page.title());
