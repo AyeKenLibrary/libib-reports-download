@@ -50,19 +50,8 @@ async function uploadToR2(buffer) {
 }
 
 async function run() {
-  //const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu",],});
-  //const context = await browser.newContext({ acceptDownloads:true });
-   const context = await chromium.launchPersistentContext(
-    './chrome-profile',   // persistent user data directory
-    {
-      headless: false,    // MUST be false for Libib
-      channel: 'chrome',  // use real Chrome, not Playwright Chromium
-      acceptDownloads: true,
-      viewport: { width: 1280, height: 800 },
-      locale: 'en-GB',
-      timezoneId: 'Europe/London',
-    }
-  );
+  const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu",],});
+  const context = await browser.newContext({ acceptDownloads:true });
   const page = await context.newPage();
   await page.waitForTimeout(30000 * Math.random());
   
@@ -104,26 +93,11 @@ async function run() {
 
     //Wait for password form to appear
     await page.waitForSelector('input[type="password"]', { timeout: 15000 });
-    console.log("Cloudflare Block Detection: ", await page.locator('script[src*="app"]').count());
-const realPassword = page.locator('input[name="password"]');
-const realToken = page.locator('input[name="_token"]');
-console.log(await page.title());
-page.on('requestfailed', req => {
-  if (req.url().includes('js')) {
-    console.log('JS blocked:', req.url(), req.failure());
-  }
-});
-  console.log(await page.evaluate(() => window.__INITIAL_STATE__));  
-const isRealLogin = await realPassword.count();
-    console.log("Value of isRealLogin", isRealLogin);
-    throw e;
+   
     //Enter password and submit
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
-    const resp = await page.waitForResponse(r => r.url().includes('/login') && r.status() < 500);
-
-console.log('Login POST status:', resp.status());
-console.log('Set-Cookie headers:', resp.headers()['set-cookie']);
+    
     // Wait for navigation to dashboard/home
     await page.waitForLoadState("domcontentloaded");
     
