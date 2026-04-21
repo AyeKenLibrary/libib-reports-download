@@ -59,10 +59,6 @@ async function run() {
     //Go to login page
     for (let i = 1; i <= 3; i++){
       try {
-            await context.setExtraHTTPHeaders({
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-  "Accept-Language": "en-GB,en;q=0.9"
-});
             console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/login", { waitUntil: "domcontentloaded" });
             await page.waitForSelector('input[name="login-email"]');
@@ -89,37 +85,24 @@ async function run() {
                   }
     }
     
-            // Wait for the JS-hydrated login form
-//await page.waitForSelector('form#login-form input[name="login-email"]');
-    await page.fill('form#login-form input[name="login-email"]', LIBIB_EMAIL);
-    await page.fill('form#login-form input[name="login-password"]', LIBIB_PASSWORD);
-    await Promise.all([
-  page.waitForNavigation({ waitUntil: "domcontentloaded" }),
-  page.click('form#login-form button[type="submit"]')
-]);
-    //Enter email and click "Next"
-    //await page.fill('input[name="login-email"]', LIBIB_EMAIL);
-    //await page.click('#login-pre-fetch-submit');
+           
+    Enter email and click "Next"
+    await page.fill('input[name="login-email"]', LIBIB_EMAIL);
+    await page.click('#login-pre-fetch-submit');
 
-    // Wait for password form to appear
-    //await page.waitForSelector('input[type="password"]', { timeout: 15000 });
+    //Wait for password form to appear
+    await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
-    // Enter password and submit
-    //await page.fill('input[type="password"]', LIBIB_PASSWORD);
-    //await Promise.all([
-      //page.waitForNavigation({ waitUntil: "domcontentloaded" }),
-      //page.click('button[type="submit"], input[type="submit"]')
-    //]);
+    Enter password and submit
+    await page.fill('input[type="password"]', LIBIB_PASSWORD);
     
-    //await page.click('button[type="submit"], input[type="submit"]');
+    await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    //await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("domcontentloaded");
     
     
     console.log("Logged into Libib");
-    const cookies = await context.cookies();
-    console.log(cookies);
 
      // Navigate to the reports page
     for (let i = 1; i <= 3; i++){
