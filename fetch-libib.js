@@ -158,7 +158,7 @@ async function run() {
     //Logout of Libib
     for (let i = 1; i <= 3; i++){
       try { 
-            console.log("Navigating to Logout Page");
+            console.log("Libib Logout Page Navigate Attempt: ", i);
             await page.goto('https://libib.com/logout', { waitUntil: 'networkidle' });
             
             //Verify logged out of Libib
@@ -168,8 +168,8 @@ async function run() {
               console.log('On Login Page Again: Successfully Logged out of Libib');
               break
             } else {
-              console.log('Problem Logging Out: Email Login Form Missing: ', loginFormAgain);
-              throw e;
+                    console.log('Problem Logging Out: Email Login Form Missing: ', loginFormAgain);
+                    throw e;
             }
           
       } catch (e) {
