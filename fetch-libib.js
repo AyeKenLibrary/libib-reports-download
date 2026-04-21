@@ -95,10 +95,15 @@ async function run() {
 
     // Enter password and submit
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
-    await page.click('button[type="submit"], input[type="submit"]');
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      page.click('button[type="submit"], input[type="submit"]')
+    ]);
+    
+    //await page.click('button[type="submit"], input[type="submit"]');
 
     // Wait for navigation to dashboard/home
-    await page.waitForLoadState("domcontentloaded");
+    //await page.waitForLoadState("domcontentloaded");
     
     
     console.log("Logged into Libib");
