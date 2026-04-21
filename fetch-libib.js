@@ -61,7 +61,7 @@ async function run() {
       try {
 
             console.log("Libib Login Page Navigate Attempt: ", i);
-            await page.goto("https://libib.com/login", { waitUntil: "domcontentloaded" });
+            await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
             await page.waitForSelector('input[name="login-email"]');
             const loginForm = await page.locator('form[action*="login"]').count();
             if (loginForm > 0) {
@@ -108,12 +108,12 @@ async function run() {
     for (let i = 1; i <= 3; i++){
       try {
             console.log("Reports Page Navigate Attempt: ", i);
-            await page.goto("https://libib.com/reports", { timeout: 60_000,  waitUntil: 'domcontentloaded' });
+            await page.goto("https://libib.com/reports", { waitUntil: 'domcontentloaded' });
             console.log(await page.title());
-            await page.waitForTimeout(2000);
-            await page.goto('https://libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
-            console.log(await page.title());
-            throw e;
+           // await page.waitForTimeout(2000);
+            //await page.goto('https://www.libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
+            //console.log(await page.title());
+            //throw e;
             await page.waitForSelector('.report-csv');
             const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
             if (DownloadCurrentCheckoutsButton > 0){
