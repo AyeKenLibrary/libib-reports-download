@@ -111,10 +111,10 @@ async function run() {
             await page.goto("https://libib.com/reports/current-checkouts", { timeout: 60_000,  waitUntil: 'domcontentloaded' });
             console.log(await page.title());
             const exportBtn = page.locator('a[href$=".csv"], .export, .export-btn').first();
-            await exportBtn.waitFor({ timeout: 8000 });
-        
+            await exportBtn.waitFor();
+            const DownloadCurrentCheckoutsButton = await exportBtn.count();
             //await page.waitForSelector('.report-csv');
-            const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
+            //const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
             if (DownloadCurrentCheckoutsButton > 0){
                 console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
                 break
