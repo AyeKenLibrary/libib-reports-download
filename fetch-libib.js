@@ -63,6 +63,7 @@ async function run() {
             console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/login", { waitUntil: "domcontentloaded" });
             await page.waitForSelector('input[name="login-email"]');
+
             const loginForm = await page.locator('form[action*="login"]').count();
             if (loginForm > 0) {
               console.log('On login page: ', await page.title());
@@ -85,20 +86,29 @@ async function run() {
                   }
     }
     
-    
+            // Wait for the JS-hydrated login form
+await page.waitForSelector('form#login-form input[name="login-email"]', {
+  timeout: 15000
+);
+    await page.fill('form#login-form input[name="login-email"]', LIBIB_EMAIL);
+    await page.fill('form#login-form input[name="login-password"]', LIBIB_PASSWORD);
+    await Promise.all([
+  page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+  page.click('form#login-form button[type="submit"]')
+]);
     //Enter email and click "Next"
-    await page.fill('input[name="login-email"]', LIBIB_EMAIL);
-    await page.click('#login-pre-fetch-submit');
+    //await page.fill('input[name="login-email"]', LIBIB_EMAIL);
+    //await page.click('#login-pre-fetch-submit');
 
     // Wait for password form to appear
-    await page.waitForSelector('input[type="password"]', { timeout: 15000 });
+    //await page.waitForSelector('input[type="password"]', { timeout: 15000 });
 
     // Enter password and submit
-    await page.fill('input[type="password"]', LIBIB_PASSWORD);
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
-      page.click('button[type="submit"], input[type="submit"]')
-    ]);
+    //await page.fill('input[type="password"]', LIBIB_PASSWORD);
+    //await Promise.all([
+      //page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      //page.click('button[type="submit"], input[type="submit"]')
+    //]);
     
     //await page.click('button[type="submit"], input[type="submit"]');
 
