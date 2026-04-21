@@ -102,7 +102,8 @@ async function run() {
     
     
     console.log("Logged into Libib");
-    
+    const cookies = await context.cookies();
+    console.log(cookies);
 
      // Navigate to the reports page
     for (let i = 1; i <= 3; i++){
@@ -110,10 +111,10 @@ async function run() {
             console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { waitUntil: 'domcontentloaded' });
             console.log(await page.title());
-            await page.waitForTimeout(2000);
-            await page.goto('https://libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
-            console.log(await page.title());
-            throw e;
+            //await page.waitForTimeout(2000);
+            //await page.goto('https://libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
+            //console.log(await page.title());
+            //throw e;
             await page.waitForSelector('.report-csv');
             const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
             if (DownloadCurrentCheckoutsButton > 0){
