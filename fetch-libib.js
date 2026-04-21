@@ -93,7 +93,8 @@ async function run() {
 
     //Wait for password form to appear
     await page.waitForSelector('input[type="password"]', { timeout: 15000 });
-
+const form = page.locator('form[action*="login"]').first();
+console.log("Inner Html from Locator: ", await form.innerHTML());
     //Enter password and submit
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
