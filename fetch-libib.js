@@ -68,16 +68,14 @@ async function run() {
             if (loginForm > 0) {
               console.log('On login page: ', await page.title());
             } else {
-              console.log('Login Form Missing: ', loginForm);
-              throw e;
+              throw new Error("Login Form Missing: ", loginForm);
             }
             const hasEmailField = await page.locator('input[name="login-email"]').count();
             if (hasEmailField > 0) {
               console.log('Input Email Field Present');
               break
             } else {
-              console.log('Missing Input Email Field');
-              throw e;
+              throw new Error("Missing Input Email Field");
             }
           } catch (e) {
                     console.error("Navigate to Login Page Error: ", e);
@@ -117,10 +115,8 @@ async function run() {
                 console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
                 break
               } else {
-                  console.log("Button for Downloading Current Checkouts Missing", DownloadCurrentCheckoutsButton);
-                  throw e;
+                  throw new Error("Button for Downloading Current Checkouts Missing", DownloadCurrentCheckoutsButton);
               } 
-            break
       } catch (e) {
                     console.error("Navigate to Reports Page Error Message: ", e);
                     if (i === 3) throw e;
