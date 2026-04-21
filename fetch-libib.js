@@ -56,6 +56,101 @@ async function run() {
   await page.waitForTimeout(30000 * Math.random());
   
   try {
+    
+    // 1. Real browser headers (helps with Cloudflare + hydration)
+  await context.setExtraHTTPHeaders({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Accept-Language": "en-GB,en;q=0.9"
+  });
+
+  // 2. Go to login page on *www* (matches your cookie domain)
+  await page.goto("https://www.libib.com/login", {
+    waitUntil: "domcontentloaded"
+  });
+
+  // 3. Wait for either:
+  //    - hydrated login form, or
+  //    - pre-fetch form (fallback path)
+  const hydratedForm = page.locator('form#login-form input[name="login-email"]');
+  const prefetchForm = page.locator('form#login-pre-fetch input[name="login-email"]');
+
+  if (await hydratedForm.count()) {
+    // --- Path A: hydrated form is already there ---
+    await page.fill('form#login-form input[name="login-email"]', LIBIB_EMAIL);
+    await page.fill('form#login-form input[name="login-password"]', LIBIB_PASSWORD);
+
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      page.click('form#login-form button[type="submit"]')
+    ]);
+  } else if (await prefetchForm.count()) {
+    // --- Path B: only pre-fetch form visible, trigger hydration ---
+    await page.fill('form#login-pre-fetch input[name="login-email"]', LIBIB_EMAIL);
+
+    await Promise.all([
+      // This click should cause JS to load the real login form
+      page.click("#login-pre-fetch-submit"),
+      page.waitForTimeout(1500) // give hydration a moment
+    ]);
+
+    // Now wait for hydrated form
+    await page.waitForSelector('form#login-form input[name="login-password"]', {
+      timeout: 15000
+    });
+
+    await page.fill('form#login-form input[name="login-email"]', LIBIB_EMAIL);
+    await page.fill('form#login-form input[name="login-password"]', LIBIB_PASSWORD);
+
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      page.click('form#login-form button[type="submit"]')
+    ]);
+  } else {
+    throw new Error("Neither hydrated login form nor pre-fetch form found on /login");
+  }
+
+  // 4. Sanity check: we should NOT still be on /login
+  const url = page.url();
+  if (url.includes("/login")) {
+    throw new Error(`Still on /login after submit, URL: ${url}`);
+  }
+
+  // 5. Check cookies — we want more than just PHPSESSID
+  const cookies = await context.cookies();
+  console.log("Libib cookies after login:", cookies);
+
+  const hasOnlyPhpSessId =
+    cookies.length === 1 && cookies[0].name === "PHPSESSID";
+
+  if (hasOnlyPhpSessId) {
+    throw new Error("Login did not complete: only PHPSESSID present");
+  }
+
+  console.log("Libib login: session looks valid");
+    
+    throw e;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //Go to login page
     for (let i = 1; i <= 3; i++){
       try {
