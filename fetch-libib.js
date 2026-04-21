@@ -56,17 +56,18 @@ async function run() {
   await page.waitForTimeout(30000 * Math.random());
   
   try {
-    // 1. Go to login page
+    //Go to login page
     for (let i = 1; i <= 3; i++){
       try {
 
             console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://www.libib.com/login", { waitUntil: "domcontentloaded" });
-            
+            await page.waitForSelector('input[name="login-email"]);
             const loginForm = await page.locator('form[action*="login"]').count();
             if (loginForm > 0) {
               console.log('On login page: ', await page.title());
             } else {
+              console.log('Login Form Missing: ', loginForm);
               throw e;
             }
             const hasEmailField = await page.locator('input[name="login-email"]').count();
@@ -153,6 +154,32 @@ async function run() {
 
     //Upload downloaded report to R2
     await uploadToR2(csvBuffer);
+
+    //Logout of Libib
+    for (let i = 1; i <= 3; i++){
+      try { 
+            console.log("Navigating to Logout Page");
+            await page.goto('https://libib.com/logout', { waitUntil: 'networkidle' });
+            
+            //Verify logged out of Libib
+            await page.waitForSelector('input[name="login-email"]');
+            const loginFormAgain = await page.locator('form[action*="login"]').count();
+            if (loginFormAgain > 0) {
+              console.log('On Login Page Again: Successfully Logged out of Libib');
+              break
+            } else {
+              console.log('Problem Logging Out: Email Login Form Missing: ', loginFormAgain);
+              throw e;
+            }
+          
+      } catch (e) {
+                    console.error("Download Error Message: ", e);
+                    if (i === 3) throw e;
+                    await page.waitForTimeout(5000 * i + Math.random() * 2000);
+                  }
+    }
+    
+    
   } finally {
     await context.close();
     await browser.close();
