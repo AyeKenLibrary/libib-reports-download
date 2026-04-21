@@ -137,7 +137,7 @@ async function run() {
             ]);
             break
       } catch (e) {
-                    console.error("Download Error Message: ", e);
+                    console.error("Download Attempt Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
@@ -173,7 +173,7 @@ async function run() {
             }
           
       } catch (e) {
-                    console.error("Download Error Message: ", e);
+                    console.error("Logout Attempt Error Message: ", e);
                     if (i === 3) throw e;
                     await page.waitForTimeout(5000 * i + Math.random() * 2000);
                   }
