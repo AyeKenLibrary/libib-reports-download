@@ -63,40 +63,6 @@ async function run() {
       timezoneId: 'Europe/London',
     }
   );
-  
-  
-  const context = await browser.newContext({
-    acceptDownloads: true,
-    
-    viewport: { width: 1280, height: 800 },
-
-    userAgent:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-
-    locale: 'en-GB',
-    timezoneId: 'Europe/London',
-
-    // Cloudflare bot detection hates missing platform hints
-    extraHTTPHeaders: {
-      'Accept-Language': 'en-GB,en;q=0.9',
-
-      // Critical for Cloudflare’s UA entropy checks
-      'Sec-CH-UA':
-        '"Chromium";v="123", "Not:A-Brand";v="8", "Google Chrome";v="123"',
-      'Sec-CH-UA-Mobile': '?0',
-      'Sec-CH-UA-Platform': '"Windows"',
-
-      // Libib expects a referer for hydration
-      Referer: 'https://libib.com/login',
-    },
-
-    // Required for Cloudflare JS challenges
-    javaScriptEnabled: true,
-
-    // Makes the browser look like a real user environment
-    deviceScaleFactor: 1,
-  });
-  
   const page = await context.newPage();
   await page.waitForTimeout(30000 * Math.random());
   
