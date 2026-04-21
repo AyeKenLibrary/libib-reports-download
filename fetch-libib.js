@@ -105,7 +105,7 @@ async function run() {
     console.log("Logged into Libib");
 
     const [download2] = await Promise.all([
-    page.waitForEvent("download2"),
+    page.waitForEvent("download"),
     page.goto("https://www.libib.com/reports/current-checkouts.csv"),
   ]);
 
