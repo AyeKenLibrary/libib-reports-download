@@ -96,7 +96,7 @@ async function run() {
 const realPassword = page.locator('input[name="password"]');
 const realToken = page.locator('input[name="_token"]');
 
-const isRealLogin = await realPassword.count() > 0 && await realToken.count() > 0;
+const isRealLogin = await realPassword.count();
     console.log("Value of isRealLogin", isRealLogin);
     //Enter password and submit
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
