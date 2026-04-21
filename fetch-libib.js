@@ -50,8 +50,21 @@ async function uploadToR2(buffer) {
 }
 
 async function run() {
-  const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu",],});
+  //const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu",],});
   //const context = await browser.newContext({ acceptDownloads:true });
+   const context = await chromium.launchPersistentContext(
+    './chrome-profile',   // persistent user data directory
+    {
+      headless: false,    // MUST be false for Libib
+      channel: 'chrome',  // use real Chrome, not Playwright Chromium
+      acceptDownloads: true,
+      viewport: { width: 1280, height: 800 },
+      locale: 'en-GB',
+      timezoneId: 'Europe/London',
+    }
+  );
+  
+  
   const context = await browser.newContext({
     acceptDownloads: true,
     
