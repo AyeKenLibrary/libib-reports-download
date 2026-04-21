@@ -111,7 +111,7 @@ async function run() {
             await page.goto("https://libib.com/reports", { waitUntil: 'domcontentloaded' });
             console.log(await page.title());
             await page.waitForTimeout(2000);
-            await page.goto('https://www.libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
+            await page.goto('https://libib.com/reports/current-checkouts', {waitUntil: 'domcontentloaded'});
             console.log(await page.title());
             throw e;
             await page.waitForSelector('.report-csv');
