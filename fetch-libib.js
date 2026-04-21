@@ -104,17 +104,8 @@ async function run() {
     
     console.log("Logged into Libib");
 
-    const [download2] = await Promise.all([
-    page.waitForEvent("download"),
-    page.goto("https://www.libib.com/reports/current-checkouts.csv"),
-  ]);
-
-  // Save the file wherever you want
-  const path2 = await download2.path();
-  console.log("Downloaded CSV at:", path2);
-  throw e;  
-
-     // Navigate to the reports page
+   
+    // Navigate to the reports page
     for (let i = 1; i <= 3; i++){
       try {
             console.log("Reports Page Navigate Attempt: ", i);
