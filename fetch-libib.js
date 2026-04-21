@@ -97,7 +97,10 @@ async function run() {
     //Enter password and submit
     await page.fill('input[type="password"]', LIBIB_PASSWORD);
     await page.click('button[type="submit"], input[type="submit"]');
+    const resp = await page.waitForResponse(r => r.url().includes('/login') && r.status() < 500);
 
+console.log('Login POST status:', resp.status());
+console.log('Set-Cookie headers:', resp.headers()['set-cookie']);
     // Wait for navigation to dashboard/home
     await page.waitForLoadState("domcontentloaded");
     
