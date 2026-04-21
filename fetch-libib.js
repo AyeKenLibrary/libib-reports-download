@@ -92,7 +92,8 @@ async function run() {
     await page.click('#login-pre-fetch-submit');
 
     //Wait for password form to appear
-    await page.waitForSelector('input[name="password"]', { timeout: 15000 });
+    await page.waitForSelector('input[type="password"]', { timeout: 15000 });
+    console.log("Cloudflare Block Detection: ", await page.locator('script[src*="app"]').count());
 const realPassword = page.locator('input[type="password"]');
 const realToken = page.locator('input[name="_token"]');
 
