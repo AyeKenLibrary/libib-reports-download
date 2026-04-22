@@ -55,6 +55,13 @@ async function run() {
                                               userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
                                               locale: 'en-US',
                                               timezoneId: 'America/New_York',
+                                              viewport: { width: 1280, height: 800 },
+                                              deviceScaleFactor: 1,
+                                              permissions: ['geolocation', 'notifications'],
+                                              geolocation: { latitude: 40.7128, longitude: -74.0060 },
+                                              colorScheme: 'light',
+                                              extraHTTPHeaders: {'Accept-Language': 'en-US,en;q=0.9','Sec-CH-UA': '"Chromium";v="123", "Not:A-Brand";v="8", "Google Chrome";v="123"', 'Sec-CH-UA-Mobile': '?0', 'Sec-CH-UA-Platform': '"Windows"',},
+                                              reducedMotion: 'no-preference',
                                               acceptDownloads: true });
   const page = await context.newPage();
   await page.waitForTimeout(30000 * Math.random());
