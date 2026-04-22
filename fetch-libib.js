@@ -62,11 +62,12 @@ async function run() {
       try {
             console.log("Libib Login Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/login", { waitUntil: "domcontentloaded" });
+            console.log('Page Title Resulting From Navigation Attempt to Login Page: ', await page.title());
             await page.waitForSelector('input[name="login-email"]');
-
+    
             const loginForm = await page.locator('form[action*="login"]').count();
             if (loginForm > 0) {
-              console.log('On login page: ', await page.title());
+              console.log('Login Form Visible');
             } else {
               throw new Error("Login Form Missing: ", loginForm);
             }
@@ -157,7 +158,7 @@ async function run() {
       try { 
             console.log("Libib Logout Page Navigate Attempt: ", i);
             await page.goto('https://libib.com/logout', { waitUntil: 'networkidle' });
-            
+            console.log('Page Title Resulting From Navigation to Logout Page: ', await page.title());
             //Verify logged out of Libib
             await page.waitForSelector('input[name="login-email"]');
             const loginFormAgain = await page.locator('form[action*="login"]').count();
@@ -165,8 +166,7 @@ async function run() {
               console.log('On Login Page Again: Successfully Logged out of Libib');
               break
             } else {
-                    console.log('Problem Logging Out: Email Login Form Missing: ', loginFormAgain);
-                    throw e;
+                    throw new Error('Problem Logging Out: Email Login Form Missing: ', loginFormAgain);
             }
           
       } catch (e) {
