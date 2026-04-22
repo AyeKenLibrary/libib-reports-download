@@ -50,8 +50,13 @@ async function uploadToR2(buffer) {
 }
 
 async function run() {
-  const browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-blink-features=AutomationControlled", "--window-size=1280,800", "--start-maximized", "--ignore-certificate-errors", "--ignore-certificate-errors-spki-list", "--disable-features=IsolateOrigins,site-per-process",],});
-  const context = await browser.newContext({ 
+
+  let browser;
+  let context;
+  let page;
+  
+  browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-blink-features=AutomationControlled", "--window-size=1280,800", "--start-maximized", "--ignore-certificate-errors", "--ignore-certificate-errors-spki-list", "--disable-features=IsolateOrigins,site-per-process",],});
+  context = await browser.newContext({ 
                                               userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
                                               locale: 'en-US',
                                               timezoneId: 'America/New_York',
@@ -63,7 +68,7 @@ async function run() {
                                               extraHTTPHeaders: {'Accept-Language': 'en-US,en;q=0.9','Sec-CH-UA': '"Chromium";v="123", "Not:A-Brand";v="8", "Google Chrome";v="123"', 'Sec-CH-UA-Mobile': '?0', 'Sec-CH-UA-Platform': '"Windows"',},
                                               reducedMotion: 'no-preference',
                                               acceptDownloads: true });
-  const page = await context.newPage();
+  page = await context.newPage();
   await page.waitForTimeout(30000 * Math.random());
   
   try {
@@ -189,8 +194,20 @@ async function run() {
     
     
   } finally {
-    await context.close();
-    await browser.close();
+      if (page) {
+        try {
+              await page.goto('https://libib.com/logout', { waitUntil: 'networkidle' });
+              console.log("Successful Libib log out in finally");
+            } catch (e) {
+                          console.log('Logout failed (likely harmless): ', e.message);
+                        }
+      }
+      if (context) {
+        await context.close();
+      }
+      if (browser) {
+        await browser.close();
+      }
   }
 }
 
