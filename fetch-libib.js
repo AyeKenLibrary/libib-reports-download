@@ -130,7 +130,7 @@ async function run() {
       try {   
             console.log("Download Attempt: ", i);
             var [download] = await Promise.all([
-              page.waitForEvent('download'), { timeout: 60_000 },
+              //page.waitForEvent('download'), 
               page.getByRole('button', { name: 'Current Checkouts' }).click()
             ]);
             break
