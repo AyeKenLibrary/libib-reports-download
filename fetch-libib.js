@@ -204,9 +204,11 @@ async function run() {
       }
       if (context) {
         await context.close();
+        console.log("Context Successfully Closed");
       }
       if (browser) {
         await browser.close();
+        console.log("Browser Successfully Closed");
       }
   }
 }
