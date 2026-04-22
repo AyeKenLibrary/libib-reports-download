@@ -129,10 +129,9 @@ async function run() {
     for (let i = 1; i <= 3; i++){
       try {   
             console.log("Download Attempt: ", i);
-            var [download] = await Promise.all([
-              page.waitForEvent('download'), { timeout: 60_000 },
-              page.getByRole('button', { name: 'Current Checkouts' }).click()
-            ]);
+            var download = await page.waitForEvent("download", async () => {
+              await page.getByRole("button", { name: "Current Checkouts" }).click();
+            });
             break
       } catch (e) {
                     console.error("Download Attempt Error Message: ", e);
