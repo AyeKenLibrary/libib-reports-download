@@ -109,7 +109,7 @@ async function run() {
       try {
             console.log("Reports Page Navigate Attempt: ", i);
             await page.goto("https://libib.com/reports", { waitUntil: 'domcontentloaded' });
-            console.log(await page.title());
+            console.log("Page Title Resulting From Navigation Attempt to Reports Page:", await page.title());
             await page.waitForSelector('.report-csv');
             const DownloadCurrentCheckoutsButton = await page.getByRole('button', { name: 'Current Checkouts' }).count(); 
             if (DownloadCurrentCheckoutsButton > 0){
