@@ -69,8 +69,10 @@ async function run() {
                                               colorScheme: 'light',
                                               extraHTTPHeaders: {'Accept-Language': 'en-US,en;q=0.9','Sec-CH-UA': '"Chromium";v="123", "Not:A-Brand";v="8", "Google Chrome";v="123"', 'Sec-CH-UA-Mobile': '?0', 'Sec-CH-UA-Platform': '"Windows"',},
                                               reducedMotion: 'no-preference',
-                                              acceptDownloads: true });
-  page = await context.newPage();
+                                              acceptDownloads: true }
+                                            );
+  
+  page = context.pages()[0] || await context.newPage();
   await page.waitForTimeout(30000 * Math.random());
   
   try {
