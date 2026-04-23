@@ -56,7 +56,7 @@ async function run() {
   let page;
   
   //browser = await chromium.launch({headless: true, args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-blink-features=AutomationControlled", "--window-size=1280,800", "--start-maximized", "--ignore-certificate-errors", "--ignore-certificate-errors-spki-list", "--disable-features=IsolateOrigins,site-per-process",],});
-  context = await chromium.launchPersistentContext(userDataDir, { 
+  context = await chromium.launchPersistentContext('.github/pw-profile/', { 
                                               headless: true, 
                                               args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-blink-features=AutomationControlled", "--window-size=1280,800", "--start-maximized", "--ignore-certificate-errors", "--ignore-certificate-errors-spki-list", "--disable-features=IsolateOrigins,site-per-process",],});
                                               userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
