@@ -205,9 +205,14 @@ async function run() {
                         }
       }
       if (context) {
-        await context.close();
-        console.log("Context Successfully Closed");
+        try {
+              await context.close(); // closes Chromium + flushes profile
+              console.log("Context Successfully Closed");
+            } catch (e) {
+                          console.error('Error Whilst Closing Context:', e);
+                        }
       }
+    
      // if (browser) {
        // await browser.close();
         //console.log("Browser Successfully Closed");
