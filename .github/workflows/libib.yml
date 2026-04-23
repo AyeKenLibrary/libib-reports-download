@@ -51,8 +51,9 @@ jobs:
         
       - name: Notify Cloudflare Worker
         run: |
-              curl -H "Authorization: Bearer ${{ secrets.CF_CALLBACK_SECRET }}" \
-              "https://ayekenlibrary.com/github-callback?status=${{ job.status }}"  
+              curl  --max-time 10 \ 
+                    -H "Authorization: Bearer ${{ secrets.CF_CALLBACK_SECRET }}" \
+                    "https://ayekenlibrary.com/github-callback?status=${{ job.status }}"  
 
       #- name: Trigger next run in 10 minutes
       #  env:
