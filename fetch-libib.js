@@ -55,10 +55,10 @@ async function run() {
   let context;
   let page;
 
-  //Delete Lockfiles
+  //Delete any leftover lockfiles
   const lockFiles = ['SingletonLock', 'SingletonCookie', 'SingletonSocket'];
     for (const file of lockFiles) {
-      const fp = path.join((".github/pw-profile/", file);
+      const fp = path.join(".github/pw-profile/", file);
       if (fs.existsSync(fp)) {
         try { fs.unlinkSync(fp); } catch (_) {}
       }
