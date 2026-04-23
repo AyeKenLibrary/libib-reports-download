@@ -92,7 +92,7 @@ async function run() {
           //Hydration delay
           await page.waitForTimeout(250);
           //Random jitter
-          await page.waitForTimeout(5000 * Math.random());
+          await page.waitForTimeout(20000 * Math.random());
   } catch (e) {
                   console.error('Failed to open persistent context:', e);
                   throw e; // propagate to CI / caller
