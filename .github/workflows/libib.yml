@@ -50,10 +50,11 @@ jobs:
         run: npm run fetch-libib
         
       - name: Notify Cloudflare Worker
-        run: |
-              curl --max-time 10 \ 
-                  -H "Authorization: Bearer ${{ secrets.CF_CALLBACK_SECRET }}" \
-                  "https://ayekenlibrary.com/github-callback?status=${{ job.status }}"  
+      run: |
+            curl --max-time 10 \
+            -H "Authorization: Bearer ${{ secrets.CF_CALLBACK_SECRET }}" \
+            "https://ayekenlibrary.com/github-callback?status=${{ job.status }}"
+ 
 
       #- name: Trigger next run in 10 minutes
       #  env:
