@@ -34,6 +34,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Create persistent profile directory
+        run: mkdir -p /home/runner/.cache/playwright-profile
+
       - name: Run Libib fetch
         env:
           LIBIB_EMAIL: ${{ secrets.LIBIB_EMAIL }}
