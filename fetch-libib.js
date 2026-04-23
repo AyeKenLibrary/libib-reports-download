@@ -54,7 +54,15 @@ async function run() {
   //let browser;
   let context;
   let page;
+  let download;
+  
   try {
+        
+        //Check profile directory exists and create if missing
+        if (!fs.existsSync(".github/pw-profile/")) {
+          fs.mkdirSync(".github/pw-profile/", { recursive: true });
+        }
+    
         //Delete any leftover lockfiles
         const lockFiles = ['SingletonLock', 'SingletonCookie', 'SingletonSocket'];
         for (const file of lockFiles) {
@@ -81,9 +89,12 @@ async function run() {
                                             );
           //Open page
           page = context.pages()[0] || await context.newPage();
+          //Hydration delay
+          await page.waitForTimeout(250);
+          //Random jitter
           await page.waitForTimeout(30000 * Math.random());
   } catch (e) {
-                  console.error('Failed to open persistent context:', err);
+                  console.error('Failed to open persistent context:', e);
                   throw e; // propagate to CI / caller
 
               }
@@ -148,7 +159,7 @@ async function run() {
                 console.log("Download Current Checkouts Button Present: ", DownloadCurrentCheckoutsButton);
                 break
               } else {
-                  throw new Error("Button for Downloading Current Checkouts Missing", DownloadCurrentCheckoutsButton);
+                  throw new Error("Button for Downloading Current Checkouts Missing");
               } 
       } catch (e) {
                     console.error("Navigate to Reports Page Error Message: ", e);
@@ -161,7 +172,7 @@ async function run() {
     for (let i = 1; i <= 3; i++){
       try {   
             console.log("Download Attempt: ", i);
-            var [download] = await Promise.all([
+            [download] = await Promise.all([
               page.waitForEvent('download'), 
               page.getByRole('button', { name: 'Current Checkouts' }).click()
             ]);
@@ -210,7 +221,7 @@ async function run() {
     
     
   } finally {
-      if (page) {
+      if (page && !page.isClosed()) {
         try {
               await page.goto('https://libib.com/logout', { waitUntil: 'networkidle' });
               console.log("Successful Libib log out in finally");
