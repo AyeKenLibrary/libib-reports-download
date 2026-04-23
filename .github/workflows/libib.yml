@@ -35,7 +35,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Create persistent profile directory
-        run: mkdir -p /home/runner/.cache/playwright-profile
+        run: mkdir -p /github/pw-profile/
 
       - name: Run Libib fetch
         env:
