@@ -92,7 +92,7 @@ async function run() {
           //Hydration delay
           await page.waitForTimeout(250);
           //Random jitter
-          await page.waitForTimeout(30000 * Math.random());
+          await page.waitForTimeout(5000 * Math.random());
   } catch (e) {
                   console.error('Failed to open persistent context:', e);
                   throw e; // propagate to CI / caller
@@ -104,6 +104,12 @@ async function run() {
     for (let i = 1; i <= 3; i++){
       try {
             console.log("Libib Login Page Navigate Attempt: ", i);
+            await page.goto("https://libib.com", { waitUntil: "domcontentloaded" });
+            console.log('Page Title Resulting From Navigation to Libib.com: ', await page.title());
+            //Hydration delay
+            await page.waitForTimeout(250);
+            //Random jitter
+            await page.waitForTimeout(5000 * Math.random());
             await page.goto("https://libib.com/login", { waitUntil: "domcontentloaded" });
             console.log('Page Title Resulting From Navigation Attempt to Login Page: ', await page.title());
             await page.waitForSelector('input[name="login-email"]');
