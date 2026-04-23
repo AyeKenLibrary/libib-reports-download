@@ -54,16 +54,17 @@ async function run() {
   //let browser;
   let context;
   let page;
-
-  //Delete any leftover lockfiles
-  const lockFiles = ['SingletonLock', 'SingletonCookie', 'SingletonSocket'];
-    for (const file of lockFiles) {
-      const fp = path.join(".github/pw-profile/", file);
-      if (fs.existsSync(fp)) {
-        try { fs.unlinkSync(fp); } catch (_) {}
-      }
-    }
-   context = await chromium.launchPersistentContext(".github/pw-profile/", { 
+  try {
+        //Delete any leftover lockfiles
+        const lockFiles = ['SingletonLock', 'SingletonCookie', 'SingletonSocket'];
+        for (const file of lockFiles) {
+          const fp = path.join(".github/pw-profile/", file);
+          if (fs.existsSync(fp)) {
+            try { fs.unlinkSync(fp); } catch (_) {}
+          }
+        }
+        //Launch context
+        context = await chromium.launchPersistentContext(".github/pw-profile/", { 
                                               headless: true, 
                                               args: ["--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-blink-features=AutomationControlled", "--window-size=1280,800", "--start-maximized", "--ignore-certificate-errors", "--ignore-certificate-errors-spki-list", "--disable-features=IsolateOrigins,site-per-process",],
                                               userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
@@ -78,10 +79,14 @@ async function run() {
                                               reducedMotion: 'no-preference',
                                               acceptDownloads: true }
                                             );
-  
-  page = context.pages()[0] || await context.newPage();
-  await page.waitForTimeout(30000 * Math.random());
-  
+          //Open page
+          page = context.pages()[0] || await context.newPage();
+          await page.waitForTimeout(30000 * Math.random());
+  } catch (e) {
+                  console.error('Failed to open persistent context:', err);
+                  throw e; // propagate to CI / caller
+
+              }
   try {
     
     //Go to login page
