@@ -244,10 +244,6 @@ async function run() {
                         }
       }
     
-     // if (browser) {
-       // await browser.close();
-        //console.log("Browser Successfully Closed");
-      //}
   }
 }
 
