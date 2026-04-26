@@ -45,6 +45,11 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+
+          # 🔥 Enable Docker layer caching
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
           tags: |
             ghcr.io/${{ steps.owner.outputs.owner_lc }}/playwright-chrome:latest
             ghcr.io/${{ steps.owner.outputs.owner_lc }}/playwright-chrome:${{ github.sha }}
