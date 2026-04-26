@@ -13,7 +13,7 @@ jobs:
 
     # Run inside your custom Docker image with real Chrome installed
     container:
-      image: ghcr.io/<your-namespace>/playwright-chrome:latest
+      image: ghcr.io/ayekenlibrary/playwright-chrome:latest
 
     env:
       NODE_OPTIONS: --max-old-space-size=4096
