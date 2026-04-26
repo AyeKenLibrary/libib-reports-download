@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.44.0-jammy-minimal
+FROM mcr.microsoft.com/playwright:v1.44.0-jammy
 
 RUN apt-get update && \
     apt-get install -y wget gnupg ca-certificates && \
