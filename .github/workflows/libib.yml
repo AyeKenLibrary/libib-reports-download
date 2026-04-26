@@ -1,9 +1,6 @@
 name: Libib CSV Fetch
 
 on:
-  #schedule:
-  #  - cron: "0 * * * *"
-  #  - cron: "30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -13,7 +10,12 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    env: 
+
+    # Run inside your custom Docker image with real Chrome installed
+    container:
+      image: ghcr.io/<your-namespace>/playwright-chrome:latest
+
+    env:
       NODE_OPTIONS: --max-old-space-size=4096
 
     steps:
@@ -31,8 +33,7 @@ jobs:
       - name: Install deps
         run: npm ci --prefer-offline
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+      # No Playwright browser install needed — Chrome is already in the container
 
       - name: Create persistent profile directory
         run: mkdir -p .github/pw-profile/
@@ -51,15 +52,6 @@ jobs:
         
       - name: Notify Cloudflare Worker
         run: |
-          curl  --max-time 10 \
+          curl --max-time 10 \
             -H "Authorization: Bearer ${{ secrets.CF_CALLBACK_SECRET }}" \
             "https://ayekenlibrary.com/github-callback?status=${{ job.status }}"
- 
-
-      #- name: Trigger next run in 10 minutes
-      #  env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #  run: |
-      #    sleep 600  #10 minutes
-      #   gh workflow run libib.yml
-
